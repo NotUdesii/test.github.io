@@ -3,19 +3,442 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Урок 9. Размещение пикселя на сайте через Менеджер тегов</title>
- 
+    <title>Кинотеатр Online</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e50914;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #e50914;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-box input {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            background: #333;
+            color: white;
+        }
+
+        .search-box button {
+            padding: 0.5rem 1rem;
+            background: #e50914;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1200x400') center/cover;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #e50914;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #f40612;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #e50914;
+            padding-left: 1rem;
+        }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .movie-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .movie-info {
+            padding: 1rem;
+        }
+
+        .movie-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .movie-year {
+            color: #ccc;
+            margin-bottom: 0.5rem;
+        }
+
+        .movie-rating {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .player-section {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+        }
+
+        .video-player {
+            width: 100%;
+            height: 400px;
+            background: #000;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .video-placeholder {
+            font-size: 1.5rem;
+            color: #666;
+        }
+
+        .player-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .control-btn {
+            padding: 0.5rem 1rem;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .control-btn:hover {
+            background: #555;
+        }
+
+        .progress-bar {
+            flex-grow: 1;
+            height: 5px;
+            background: #333;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: #e50914;
+            width: 30%;
+        }
+
+        .categories {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: #e50914;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .movies-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+    </style>
 </head>
 <body>
-    
-<!-- START OF ALTCRAFT PIXEL CODE !-->
-      <script type="text/javascript">
-      !function(){var e={url:"https://pxl.demo.altcraft.com/pixel?k=4jtMs0znxJC%2Fmyg8gMKm9sJb3ifwXC7ObmjAHAFAb41axZT5IQLfp91HVEW46hhg&s=cs2iC1Nwox0%3D",goals:"click,view",value:parseFloat("0"),timeout:parseInt("5000"),after_scroll:JSON.parse("false"),auto_load:JSON.parse("true")},o=function(o,t,n,a){var d=[].concat(o).map(function(e){return encodeURIComponent(e)}).join(","),c=encodeURIComponent(String(t||0)),i=encodeURIComponent(n.matching_mode||""),r=encodeURIComponent(n.db_id||0),u=encodeURIComponent(JSON.stringify(n.match||{})),l=encodeURIComponent(JSON.stringify(n.update||{}));setTimeout(function(){(new Image).src=[e.url,"goals="+d,"value="+c,"db_id="+r,"mmode="+i,"match="+u,"update="+l].join("&")},a)},t=!1,n=function(){t||(t=!0,e.after_scroll?document.addEventListener("scroll",function(){(window.pageYOffset||document.documentElement.scrollTop>0)&&o(e.goals,e.value,{},e.timeout)},{once: true}):e.auto_load&&o(e.goals,e.value,{},e.timeout))};"complete"===document.readyState||"interactive"===document.readyState?n():window.addEventListener("load",n);window.ak_pixel_push=function(e,t,n,a,d,c){var i=[];Array.isArray(e)?i=e:i[0]=e,o(i,t,{match:n,update:a,matching_mode:d,db_id:c},0)}}();
-      </script>
-      <!-- END OF ALTCRAFT PIXEL CODE !-->
-    <p>Страница 1</p>
-    <button id="btn_1">Кнопка 1</button>
-    <button id="btn_2">Кнопка 2</button>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">КИНОТЕАТР</div>
+            <div class="nav-links">
+                <a href="#home">Главная</a>
+                <a href="#movies">Фильмы</a>
+                <a href="#series">Сериалы</a>
+                <a href="#new">Новинки</a>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Поиск фильмов...">
+                <button>Найти</button>
+            </div>
+        </nav>
+    </header>
 
+    <div class="container">
+        <section class="hero" id="home">
+            <h1>Смотрите фильмы онлайн</h1>
+            <p>Тысячи фильмов и сериалов в отличном качестве</p>
+            <a href="#movies" class="btn">Смотреть сейчас</a>
+        </section>
+
+        <div class="categories">
+            <button class="category-btn active">Все</button>
+            <button class="category-btn">Боевики</button>
+            <button class="category-btn">Комедии</button>
+            <button class="category-btn">Драмы</button>
+            <button class="category-btn">Фантастика</button>
+            <button class="category-btn">Ужасы</button>
+            <button class="category-btn">Мультфильмы</button>
+        </div>
+
+        <section id="movies">
+            <h2 class="section-title">Популярные фильмы</h2>
+            <div class="movies-grid">
+                <div class="movie-card" onclick="playMovie('Аватар')">
+                    <img src="https://via.placeholder.com/300x400/333/fff?text=Аватар" alt="Аватар" class="movie-poster">
+                    <div class="movie-info">
+                        <div class="movie-title">Аватар</div>
+                        <div class="movie-year">2022 • Фантастика</div>
+                        <div class="movie-rating">★ 8.5/10</div>
+                    </div>
+                </div>
+
+                <div class="movie-card" onclick="playMovie('Оппенгеймер')">
+                    <img src="https://via.placeholder.com/300x400/333/fff?text=Оппенгеймер" alt="Оппенгеймер" class="movie-poster">
+                    <div class="movie-info">
+                        <div class="movie-title">Оппенгеймер</div>
+                        <div class="movie-year">2023 • Драма</div>
+                        <div class="movie-rating">★ 9.0/10</div>
+                    </div>
+                </div>
+
+                <div class="movie-card" onclick="playMovie('Джон Уик 4')">
+                    <img src="https://via.placeholder.com/300x400/333/fff?text=Джон+Уик+4" alt="Джон Уик 4" class="movie-poster">
+                    <div class="movie-info">
+                        <div class="movie-title">Джон Уик 4</div>
+                        <div class="movie-year">2023 • Боевик</div>
+                        <div class="movie-rating">★ 8.2/10</div>
+                    </div>
+                </div>
+
+                <div class="movie-card" onclick="playMovie('Барби')">
+                    <img src="https://via.placeholder.com/300x400/333/fff?text=Барби" alt="Барби" class="movie-poster">
+                    <div class="movie-info">
+                        <div class="movie-title">Барби</div>
+                        <div class="movie-year">2023 • Комедия</div>
+                        <div class="movie-rating">★ 7.8/10</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="player-section" id="player" style="display: none;">
+            <h2 class="section-title" id="current-movie">Выбранный фильм</h2>
+            <div class="video-player">
+                <div class="video-placeholder">Видеоплеер</div>
+            </div>
+            <div class="player-controls">
+                <button class="control-btn" onclick="playPause()">▶️ Воспроизвести</button>
+                <button class="control-btn" onclick="stopMovie()">⏹️ Стоп</button>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+                <button class="control-btn" onclick="fullscreen()">⛶ Полный экран</button>
+            </div>
+        </section>
+
+        <section id="new">
+            <h2 class="section-title">Новинки</h2>
+            <div class="movies-grid">
+                <div class="movie-card" onclick="playMovie('Миссия невыполнима 7')">
+                    <img src="https://via.placeholder.com/300x400/333/fff?text=Миссия+невыполнима+7" alt="Миссия невыполнима 7" class="movie-poster">
+                    <div class="movie-info">
+                        <div class="movie-title">Миссия невыполнима 7</div>
+                        <div class="movie-year">2023 • Боевик</div>
+                        <div class="movie-rating">★ 8.1/10</div>
+                    </div>
+                </div>
+
+                <div class="movie-card" onclick="playMovie('Стражи Галактики 3')">
+                    <img src="https://via.placeholder.com/300x400/333/fff?text=Стражи+Галактики+3" alt="Стражи Галактики 3" class="movie-poster">
+                    <div class="movie-info">
+                        <div class="movie-title">Стражи Галактики 3</div>
+                        <div class="movie-year">2023 • Фантастика</div>
+                        <div class="movie-rating">★ 8.4/10</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 Кинотеатр Online. Все права защищены.</p>
+    </footer>
+
+    <script>
+        function playMovie(movieTitle) {
+            document.getElementById('current-movie').textContent = movieTitle;
+            document.getElementById('player').style.display = 'block';
+            
+            // Прокрутка к плееру
+            document.getElementById('player').scrollIntoView({ behavior: 'smooth' });
+            
+            // Здесь можно добавить логику для загрузки реального видео
+            console.log('Воспроизведение фильма:', movieTitle);
+        }
+
+        function playPause() {
+            // Логика воспроизведения/паузы
+            console.log('Play/Pause');
+        }
+
+        function stopMovie() {
+            // Логика остановки
+            console.log('Stop');
+        }
+
+        function fullscreen() {
+            // Логика полноэкранного режима
+            console.log('Fullscreen');
+        }
+
+        // Обработчики для категорий
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Здесь можно добавить фильтрацию фильмов по категориям
+                console.log('Выбрана категория:', this.textContent);
+            });
+        });
+
+        // Поиск
+        document.querySelector('.search-box button').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-box input').value;
+            console.log('Поиск:', searchTerm);
+            alert('Поиск: ' + searchTerm);
+        });
+    </script>
 </body>
 </html>
