@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кинотеатр Online</title>
-    <script>
+ <script>
     (function (window, document, dataLayerName, containerID) {
         window[dataLayerName] = window[dataLayerName] || [];
         window[dataLayerName].push({ 'start': new Date().getTime(), event: 'actm-js' });
@@ -12,14 +12,11 @@
         var script = document.createElement('script');
         var dl = dataLayerName !== 'acDataLayer' ? '&l=' + dataLayerName : '';
         script.async = true;
-        script.src = 'https://pxl.demo.altcraft.com/actm/js/actm.js?id=' + containerID + dl;
+        script.src = 'https://10.200.0.146:80/actm/js/actm.js?id=' + containerID + dl;
         script.type = 'module';
         if (firstScript && firstScript.parentNode) {
             firstScript.parentNode.insertBefore(script, firstScript);
-        }
-    }(window, document, 'acDataLayer', 'ATM-WboPTwqZc0eX4pjq'));
-</script>
-    <style>
+        
         * {
             margin: 0;
             padding: 0;
